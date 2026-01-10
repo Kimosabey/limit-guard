@@ -26,13 +26,13 @@
 
 ## Visual Overview
 
-### Dashboard
+### System Architecture
 
 <p align="center">
-  <img src="./docs/assets/dashboard.png" alt="LimitGuard Dashboard" width="800"/>
+  <img src="./docs/assets/architecture.png" alt="LimitGuard Architecture" width="800"/>
 </p>
 
-*Real-time rate limiting visualization with cyberpunk aesthetics*
+*Distributed Rate Limiting Architecture with Redis Token Buckets*
 
 ### Atomic Flow
 
