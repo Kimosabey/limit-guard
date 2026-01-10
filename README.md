@@ -180,12 +180,14 @@ limit-guard/
 
 ---
 
-## License
+## 👤 Author
 
-MIT License
+**Harshan Aiyappa**
+
+- GitHub: [@Kimosabey](https://github.com/Kimosabey)
 
 ---
 
-**Built by**: [Harshan Aiyappa](https://github.com/Kimosabey)  
 **Tech Stack**: Node.js • Redis • Lua • Next.js  
 **Pattern**: Rate Limiting • Token Bucket • Atomic Operations
+
