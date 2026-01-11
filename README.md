@@ -24,7 +24,44 @@
 
 ---
 
-## Visual Overview
+## 🚀 Quick Start
+
+### 1. Installation & Infrastructure
+```bash
+# Clone the repo
+git clone https://github.com/Kimosabey/limit-guard.git
+cd limit-guard
+
+# Start Redis Infrastructure
+docker-compose up -d
+
+# Install Dependencies
+npm install
+cd dashboard && npm install && cd ..
+```
+
+### 2. Generate SSL Certificates
+```bash
+node src/scripts/generateCert.js
+# Output: server.key, server.cert
+```
+
+### 3. Run the Stack
+
+**Backend (Port 8800)**
+```bash
+node src/server.js
+```
+
+**Frontend Dashboard (Port 3300)**
+```bash
+cd dashboard
+npm run dev
+```
+
+---
+
+## 📸 Screenshots
 
 ### System Architecture
 
@@ -52,29 +89,27 @@
 
 ---
 
-## Overview
+## ✨ Key Features
 
-**LimitGuard** is a distributed rate limiter that solves the fundamental race condition problem in traditional rate limiters by implementing the **Token Bucket Algorithm** directly inside Redis using **Lua Scripting**, guaranteeing O(1) atomicity even under massive concurrency.
+### 🛡️ Atomic Rate Limiting
+- **Redis Lua Scripting**: Executes check + increment in a single atomic step.
+- **Zero Race Conditions**: Verified with 100 concurrent connections.
 
-### The Problem
+### ⚠️ Fail-Open Strategy
+- **High Availability Focus**: If Redis fails, traffic is **allowed** rather than blocked.
+- **Circuit Breaker**: Prevents cascading failures during outages.
 
-Traditional rate limiters suffer from **race conditions** when they perform `GET` then `INCR` operations separately. Under high concurrency, this can allow more requests than the configured limit.
+### 🔒 Security First
+- **TLS 1.2+**: End-to-end HTTPS encryption for API and Dashboard.
+- **Self-Signed Certs**: Automated generation script included.
 
-### The Solution
-
-**Atomic Operations**: LimitGuard executes validation and increment in a single Redis Lua script, achieving 0% race conditions (verified with `autocannon` at 100 concurrent connections).
-
-### Key Features
-
-- **Atomic Operations**: 0% race conditions with Redis Lua scripting
-- **Fail-Open Strategy**: System degrades gracefully if Redis crashes (allows traffic vs. causing outage)
-- **End-to-End Encryption**: Self-signed HTTPS (TLS 1.2+) for API and Dashboard
-- **Precision Timer**: Propagates Redis TTL to frontend for real-time "Reset Countdown"
-- **Real-time Dashboard**: Live visualization of traffic spikes, blocked requests, and metrics
+### 📊 Real-Time Observability
+- **Live Dashboard**: Visualizes allowed vs blocked requests.
+- **Precision Timer**: Syncs Redis TTL with frontend for accurate countdowns.
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 ```mermaid
 sequenceDiagram
@@ -94,52 +129,14 @@ sequenceDiagram
     end
 ```
 
----
-
-## Getting Started
-
-### Prerequisites
-- Docker & Docker Compose
-- Node.js v18+
-
-### 1. Installation & Infrastructure
-```bash
-# Clone the repo
-git clone https://github.com/Kimosabey/limit-guard.git
-cd limit-guard
-
-# Start Redis Infrastructure
-docker-compose up -d
-
-# Install Dependencies
-npm install
-cd dashboard && npm install && cd ..
-```
-
-### 2. Generate SSL Certificates (Security First)
-```bash
-node src/scripts/generateCert.js
-# Output: server.key, server.cert
-```
-
-### 3. Run the Stack
-
-**Backend (Port 8800)**
-```bash
-node src/server.js
-```
-
-**Frontend Dashboard (Port 3300)**
-```bash
-cd dashboard
-npm run dev
-```
+**LimitGuard** implements the **Token Bucket Algorithm** directly inside Redis using **Lua Scripting**. This guarantees **O(1)** complexity and strict atomicity, solving the "check-then-act" race condition found in traditional rate limiters.
 
 ---
 
-## Verification
+## 🧪 Testing & Scripts
 
-Run the Load Test to prove atomicity:
+### Run Load Test
+Prove atomicity by simulating high concurrency:
 ```bash
 node src/scripts/loadTest.js
 ```
@@ -153,41 +150,52 @@ TEST PASSED: strict rate limit enforced.
 
 ---
 
-## Documentation Index
+## 📚 Documentation
 
 | Doc | Description |
 | :--- | :--- |
 | **[SETUP.md](./docs/SETUP.md)** | Step-by-step installation & troubleshooting |
-| **[FLOW.md](./docs/FLOW.md)** | Deep dive into Architecture & Atomic Logic |
-| **[CASES.md](./docs/CASES.md)** | QA Playbook & Failure Scenarios |
-| **[INTERVIEW.md](./docs/INTERVIEW.md)** | Senior QA: "Defend Your Design" |
+| **[FLOW.md](./docs/FLOW.md)** | Deep dive into architecture & atomic logic |
+| **[CASES.md](./docs/CASES.md)** | QA playbook & failure scenarios |
+| **[INTERVIEW.md](./docs/INTERVIEW.md)** | Technical design defense |
 
 ---
 
-## Project Structure
+## 🔧 Tech Stack
 
-```
-limit-guard/
-├── src/
-│   ├── scripts/
-│   │   └── rateLimit.lua       # The Atomic Brain
-│   ├── middleware/
-│   │   └── rateLimiter.js      # Fail-Open Logic
-│   └── server.js               # HTTPS Gateway
-├── dashboard/                  # Next.js Visualization
-└── docker-compose.yml          # Infrastructure
-```
+| Component | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Core Logic** | Node.js + Lua | Atomic rate limiting engine |
+| **Storage** | Redis 7 | Distributed counter & TTL management |
+| **Frontend** | Next.js 14 | Real-time monitoring dashboard |
+| **Security** | OpenSSL | HTTPS/TLS encryption |
+| **Ops** | Docker Compose | Infrastructure orchestration |
+
+---
+
+## 🚀 Future Enhancements
+
+- [ ] Distributed Redis (Cluster Mode) support
+- [ ] IP Whitelisting/Blacklisting middleware
+- [ ] Multiple rate limit policies (Per User, Per Route)
+- [ ] Prometheus metrics export
+- [ ] GraphQL API gateway integration
+
+---
+
+## 📝 License
+
+MIT License - See [LICENSE](./LICENSE) for details
 
 ---
 
 ## 👤 Author
 
-**Harshan Aiyappa**
-
-- GitHub: [@Kimosabey](https://github.com/Kimosabey)
+**Harshan Aiyappa**  
+Senior Full-Stack Engineer  
+📧 [GitHub](https://github.com/Kimosabey)
 
 ---
 
-**Tech Stack**: Node.js • Redis • Lua • Next.js  
+**Built with**: Node.js • Redis • Lua • Next.js  
 **Pattern**: Rate Limiting • Token Bucket • Atomic Operations
-
