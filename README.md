@@ -1,4 +1,7 @@
 # LimitGuard
+
+![Thumbnail](docs/assets/thumbnail.png)
+
 ## Distributed Rate Limiter with Atomic Redis Lua Scripting
 
 <div align="center">
@@ -111,23 +114,7 @@ npm run dev
 
 ## 🏗️ Architecture
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Gateway as Node.js (LimitGuard)
-    participant Redis as Redis (Lua)
-    
-    Client->>Gateway: HTTPS Request
-    Gateway->>Redis: EVAL (Atomic Check + Increment)
-    
-    alt Allowed
-        Redis-->>Gateway: 1
-        Gateway->>Client: 200 OK
-    else Denied
-        Redis-->>Gateway: 0
-        Gateway->>Client: 429 Too Many Requests
-    end
-```
+![Architecture](docs/assets/architecture.png)
 
 **LimitGuard** implements the **Token Bucket Algorithm** directly inside Redis using **Lua Scripting**. This guarantees **O(1)** complexity and strict atomicity, solving the "check-then-act" race condition found in traditional rate limiters.
 
