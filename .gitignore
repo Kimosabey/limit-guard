@@ -13,3 +13,6 @@ server.cert
 # OS
 .DS_Store
 Thumbs.db
+
+# Log files
+*.log
