@@ -2,8 +2,6 @@
 
 ![Thumbnail](docs/assets/thumbnail.png)
 
-![Hero](docs/assets/hero_main.png)
-
 ## Distributed Rate Limiter with Atomic Redis Lua Scripting
 
 <div align="center">
@@ -29,24 +27,24 @@ npm install && cd dashboard && npm install && cd ..
 # 2. Run Dev Stack
 npm run dev
 ```
-> This script automatically:
-> *   Generates SSL Certs (HTTPS).
-> *   Starts Redis via Docker.
-> *   Launches the API (4000) and Dashboard (3000).
 
-> **Detailed Setup**: See [GETTING_STARTED.md](./docs/GETTING_STARTED.md) for manual configurations.
+> **Detailed Setup**: See [GETTING_STARTED.md](./docs/GETTING_STARTED.md).
 
 ---
 
 ## 📸 Demo & Architecture
 
+### Real-time Monitoring Dashboard
+![Dashboard](docs/assets/dashboard.png)
+*Visualizing blocked vs allowed requests with millisecond precision.*
+
 ### System Architecture
 ![Architecture](docs/assets/architecture.png)
-*Distributed Gateway Pattern protected by Atomic Middleware*
+*Distributed Gateway Pattern protected by Atomic Middleware.*
 
 ### Concurrency Evidence
 ![Concurrency](docs/assets/concurrency-test.png)
-*50 Concurrent Operations -> 0 Race Conditions (Exact Limit Enforced)*
+*50 Concurrent Operations -> 0 Race Conditions (Exact Limit Enforced).*
 
 > **Deep Dive**: See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the Lua Script logic.
 
@@ -56,8 +54,23 @@ npm run dev
 
 *   **🛡️ Atomic Operations**: Uses `EVALSHA` to execute logic inside Redis, preventing race conditions.
 *   **⚠️ Fail-Open Design**: Prioritizes Availability. If Redis dies, traffic is **allowed** (Circuit Breaker).
+    ![Fail Safe](docs/assets/workflow.png)
 *   **🔒 End-to-End HTTPS**: Includes automated Self-Signed Certificate generation.
-*   **📊 Live Telemetry**: Real-time Next.js dashboard showing Blocked vs Allowed requests.
+*   **📊 Live Telemetry**: Real-time Next.js dashboard showing volume and resets.
+
+---
+
+## 🏗️ The Protective Journey
+
+Understanding how a request is validated at the edge:
+
+![Workflow](docs/assets/workflow.png)
+
+1.  **Intercept**: Request hits the Node.js middleware.
+2.  **Evaluate**: Middleware sends the user's IP and rules to Redis via Lua.
+3.  **Atomic Check**: Redis runs the logic in a single tick (No data races).
+4.  **Decision**: 200 (Allowed) or 429 (Too Many Requests).
+5.  **Telemetry**: State pushed to the dashboard via WebSockets or polling.
 
 ---
 

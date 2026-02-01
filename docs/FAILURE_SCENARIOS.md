@@ -1,8 +1,10 @@
-# 🛡️ Failure Scenarios & Resilience
+# 🛡️ Failure Scenarios & Resilience: LimitGuard
 
-> "Rate Limiters must fail *open*, not *closed*."
+> Documenting distributed system failure modes and atomic safeguards.
 
-This document covers how LimitGuard handles concurrency, outages, and race conditions.
+![Workflow](./assets/workflow.png)
+
+---
 
 ## 1. Failure Matrix
 

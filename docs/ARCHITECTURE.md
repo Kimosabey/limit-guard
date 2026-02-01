@@ -1,8 +1,10 @@
-# 🏗️ System Architecture
+# 🏗️ System Architecture: LimitGuard
 
 ## 1. High-Level Design (HLD)
 
 LimitGuard implements a **Distributed Gateway Pattern** to protect APIs from abuse. It sits as a middleware layer, intercepting every request to verify traffic volume against a centralized counter before allowing it to proceed to the controller logic.
+
+![Architecture](./assets/architecture.png)
 
 ```mermaid
 graph TD

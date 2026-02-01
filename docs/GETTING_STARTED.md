@@ -1,10 +1,12 @@
-# 🚀 Getting Started with LimitGuard
+# 🚀 Getting Started: LimitGuard
 
-> **Prerequisites**
-> *   **Docker Desktop** (for Redis)
-> *   **Node.js v18+** (LTS)
+> Step-by-step guide to local deployment and environment configuration.
 
-## 1. Environment Setup
+![Dashboard Preview](./assets/dashboard.png)
+
+---
+
+## 1. Prerequisites
 
 The system includes a smart orchestrator (`start_dev.js`) that handles configuration, but you can check `.env` if needed.
 

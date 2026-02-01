@@ -1,4 +1,4 @@
-# 🎤 Interview Cheat Sheet: LimitGuard
+# 🎓 Interview Q&A: LimitGuard
 
 ## 1. The Elevator Pitch (2 Minutes)
 
